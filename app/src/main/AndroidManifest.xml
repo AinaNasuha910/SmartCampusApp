@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SmartCampusApp">
         <activity
+            android:name=".MapsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".BuildingsActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
