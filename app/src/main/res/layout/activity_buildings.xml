@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <!-- Page Title -->
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -16,9 +16,20 @@
         android:layout_marginBottom="16dp"
         android:layout_gravity="center"/>
 
-    <!-- Building List -->
+    <SearchView
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:queryHint="Search building..."
+        android:iconifiedByDefault="false"
+        android:layout_marginBottom="12dp"/>
+
+
     <ListView
         android:id="@+id/buildingListView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:divider="@null"
+        android:paddingTop="8dp"/>
+
 </LinearLayout>
