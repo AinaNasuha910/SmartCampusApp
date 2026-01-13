@@ -34,17 +34,12 @@ public class BuildingAdapter extends ArrayAdapter<BuildingEntity> {
             name.setText(building.name);
             desc.setText(building.description);
 
-            // --- NAVIGATION LOGIC (The Sensor Part) ---
-            // --- UPDATED NAVIGATION LOGIC ---
             btnNavigate.setOnClickListener(v -> {
                 double lat = building.latitude;
                 double lng = building.longitude;
                 String label = building.name;
 
-                // This URI format:
-                // geo:lat,lng -> center the map
-                // ?q=lat,lng -> drop a pin at these coordinates
-                // (label) -> text to show on the pin
+
                 String uriString = "geo:" + lat + "," + lng + "?q=" + lat + "," + lng + "(" + Uri.encode(label) + ")";
                 Uri gmmIntentUri = Uri.parse(uriString);
 
