@@ -4,103 +4,105 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.net.Uri;
-
-
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BuildingsActivity extends AppCompatActivity {
 
-    ListView buildingListView;
-    SearchView searchView;
-
-    List<Building> buildingList;   // original list
-    List<Building> filteredList;   // filtered list
-    BuildingAdapter adapter;
+    private ListView listView;
+    private BuildingAdapter adapter;
+    private List<BuildingEntity> allBuildings = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buildings);
 
-        // Find views
-        buildingListView = findViewById(R.id.buildingListView);
-        searchView = findViewById(R.id.searchView);
+        listView = findViewById(R.id.buildingListView);
+        SearchView searchView = findViewById(R.id.searchView);
+        FloatingActionButton fab = findViewById(R.id.fabAddBuilding);
 
-        // Original building data
-        buildingList = new ArrayList<>();
-        buildingList.add(new Building("Faculty of Engineering", "Main engineering building"));
-        buildingList.add(new Building("Faculty of Computing", "Computing and IT programs"));
-        buildingList.add(new Building("Perpustakaan Universiti", "University library"));
-        buildingList.add(new Building("Dewan Astaka", "Main hall for events"));
+        // 1. "Plus" Button logic (CREATE)
+        fab.setOnClickListener(v -> {
+            Intent intent = new Intent(this, AddBuildingActivity.class);
+            startActivity(intent);
+        });
 
-        // Copy to filtered list
-        filteredList = new ArrayList<>(buildingList);
+        // 2. Long Click logic (DELETE)
+        listView.setOnItemLongClickListener((parent, view, position, id) -> {
+            BuildingEntity selected = adapter.getItem(position);
+            showDeleteDialog(selected);
+            return true;
+        });
 
-        // Adapter
-        adapter = new BuildingAdapter(this, filteredList);
-        buildingListView.setAdapter(adapter);
-
-        // Search filter logic
+        // 3. Search logic (READ)
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
+            public boolean onQueryTextSubmit(String query) { return false; }
             @Override
             public boolean onQueryTextChange(String newText) {
-                filteredList.clear();
-
-                for (Building b : buildingList) {
-                    if (b.name.toLowerCase().contains(newText.toLowerCase())) {
-                        filteredList.add(b);
-                    }
-                }
-
-                adapter.notifyDataSetChanged();
+                filterList(newText);
                 return true;
             }
         });
+    }
 
-        // Click building → open map
-        buildingListView.setOnItemClickListener((parent, view, position, id) -> {
+    // Refresh list every time we come back to this screen
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadBuildings();
+    }
 
-            Building selected = filteredList.get(position);
+    private void loadBuildings() {
+        new Thread(() -> {
+            // Fetch fresh data from Database
+            allBuildings = AppDatabase.getInstance(this).buildingDao().getAllBuildings();
 
-            double lat = 0;
-            double lng = 0;
+            // Update the UI
+            runOnUiThread(() -> {
+                if (adapter == null) {
+                    adapter = new BuildingAdapter(this, new ArrayList<>(allBuildings));
+                    listView.setAdapter(adapter);
+                } else {
+                    adapter.clear();
+                    adapter.addAll(allBuildings);
+                    adapter.notifyDataSetChanged(); // Tells the screen to redraw
+                }
+            });
+        }).start();
+    }
 
-            switch (selected.name) {
-                case "Faculty of Engineering":
-                    lat = 3.2148;
-                    lng = 101.7290;
-                    break;
-
-                case "Faculty of Computing":
-                    lat = 3.2155;
-                    lng = 101.7278;
-                    break;
-
-                case "Perpustakaan Universiti":
-                    lat = 3.2150;
-                    lng = 101.7285;
-                    break;
-
-                case "Dewan Astaka":
-                    lat = 3.2139;
-                    lng = 101.7296;
-                    break;
+    private void filterList(String text) {
+        List<BuildingEntity> filteredList = new ArrayList<>();
+        for (BuildingEntity building : allBuildings) {
+            if (building.name.toLowerCase().contains(text.toLowerCase())) {
+                filteredList.add(building);
             }
+        }
+        adapter.clear();
+        adapter.addAll(filteredList);
+        adapter.notifyDataSetChanged();
+    }
 
-            Uri gmmIntentUri = Uri.parse("geo:" + lat + "," + lng + "?q=" + lat + "," + lng + "(" + selected.name + ")");
-            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-            mapIntent.setPackage("com.google.android.apps.maps");
+    private void showDeleteDialog(BuildingEntity building) {
+        new AlertDialog.Builder(this)
+                .setTitle("Delete Building")
+                .setMessage("Are you sure you want to delete " + building.name + "?")
+                .setPositiveButton("Delete", (dialog, which) -> {
+                    // RUN ON BACKGROUND THREAD
+                    new Thread(() -> {
+                        // 1. Delete from Room
+                        AppDatabase.getInstance(this).buildingDao().deleteBuilding(building);
 
-            startActivity(mapIntent);
-        });
+                        // 2. IMPORTANT: Refresh the list immediately
+                        loadBuildings();
+                    }).start();
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
     }
 }
