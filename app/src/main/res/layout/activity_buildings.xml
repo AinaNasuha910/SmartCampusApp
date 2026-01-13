@@ -1,35 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/buildingsRoot"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:background="@color/blue">
 
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="UMPSA Buildings"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="16dp"
-        android:layout_gravity="center"/>
-
-    <SearchView
-        android:id="@+id/searchView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:queryHint="Search building..."
-        android:iconifiedByDefault="false"
-        android:layout_marginBottom="12dp"/>
-
-
-    <ListView
-        android:id="@+id/buildingListView"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@null"
-        android:paddingTop="8dp"/>
+        android:orientation="vertical"
+        android:padding="16dp">
 
-</LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="UMPSA Buildings"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp"
+            android:layout_gravity="center"/>
+
+        <SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:queryHint="Search building..."
+            android:iconifiedByDefault="false"
+            android:layout_marginBottom="12dp"/>
+
+        <ListView
+            android:id="@+id/buildingListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@null"
+            android:paddingTop="8dp"/>
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddBuilding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="24dp"
+        android:src="@android:drawable/ic_input_add"
+        app:tint="@android:color/white"
+       />
+
+</FrameLayout>

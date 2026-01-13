@@ -24,12 +24,33 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        // STEP 3: Campus Navigation click
+        // --- NAVIGATION LOGIC ---
         CardView cardNavigation = findViewById(R.id.cardNavigation);
-
         cardNavigation.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, BuildingsActivity.class);
             startActivity(intent);
         });
+
+        // --- DATABASE TEST LOGIC (NEW) ---
+        AppDatabase db = AppDatabase.getInstance(this);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                // Check if we already have data so we don't keep adding the same building
+                if (db.buildingDao().getAllBuildings().isEmpty()) {
+                    BuildingEntity testBuilding = new BuildingEntity();
+                    testBuilding.name = "Faculty of Computing";
+                    testBuilding.description = "Main hub for IT students";
+                    testBuilding.latitude = 3.5432;
+                    testBuilding.longitude = 103.4288;
+
+                    db.buildingDao().insertBuilding(testBuilding);
+                    System.out.println("DATABASE TEST: First building saved!");
+                } else {
+                    System.out.println("DATABASE TEST: Data already exists.");
+                }
+            }
+        }).start();
     }
 }
