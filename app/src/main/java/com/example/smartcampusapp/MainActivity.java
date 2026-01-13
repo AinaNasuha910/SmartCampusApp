@@ -17,21 +17,21 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        // Handle system insets
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        // --- NAVIGATION LOGIC ---
+
         CardView cardNavigation = findViewById(R.id.cardNavigation);
         cardNavigation.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, BuildingsActivity.class);
             startActivity(intent);
         });
 
-        // --- DATABASE TEST LOGIC (NEW) ---
+
         AppDatabase db = AppDatabase.getInstance(this);
 
         new Thread(new Runnable() {

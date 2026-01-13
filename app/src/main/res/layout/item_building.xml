@@ -1,27 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="12dp"
-    android:elevation="6dp">
+    android:layout_margin="8dp"
+    app:cardCornerRadius="0dp"
+    app:cardElevation="4dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="12dp"
+        android:padding="16dp"
         android:gravity="center_vertical"
         android:background="@color/blue">
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginEnd="12dp" />
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_marginStart="16dp"
             android:orientation="vertical">
 
             <TextView
@@ -29,6 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Building Name"
+                android:textColor="#333333"
                 android:textStyle="bold"
                 android:textSize="16sp" />
 
@@ -36,9 +36,9 @@
                 android:id="@+id/txtBuildingDesc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Building description"
-                android:textSize="13sp"
-                android:textColor="#666666" />
+                android:text="Description goes here"
+                android:textColor="#757575"
+                android:textSize="14sp" />
         </LinearLayout>
 
         <Button
@@ -46,9 +46,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="MAP"
+            android:textSize="12sp"
+            android:backgroundTint="#2196F3"
             android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:textSize="10sp" />
+            android:focusableInTouchMode="false" />
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>
