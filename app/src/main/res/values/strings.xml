@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SmartCampusApp</string>
+    <string name="app_name">Smart Campus App</string>
     <string name="time">Time</string>
     <string name="report_a_lost_item">Report a lost item</string>
     <string name="item_name">Item Name</string>
