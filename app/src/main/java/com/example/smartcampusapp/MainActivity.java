@@ -31,6 +31,12 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        CardView attendanceNavigation = findViewById(R.id.AttendanceNavigation);
+        attendanceNavigation.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, AttendanceMain.class);
+            startActivity(intent);
+        });
+
 
         AppDatabase db = AppDatabase.getInstance(this);
 
