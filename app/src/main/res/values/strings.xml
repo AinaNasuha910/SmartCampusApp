@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">SmartCampusApp</string>
+    <string name="time">Time</string>
+    <string name="report_a_lost_item">Report a lost item</string>
+    <string name="item_name">Item Name</string>
+    <string-array name="handover_options">
+        <item>Security Office</item>
+        <item>Library Counter</item>
+        <item>Kept with me</item>
+    </string-array>
 </resources>

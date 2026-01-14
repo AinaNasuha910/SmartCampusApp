@@ -37,6 +37,13 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        CardView lostandfoundNavigation = findViewById(R.id.LostAndFoundNavigation);
+        lostandfoundNavigation.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, LostAndFoundActivity.class);
+            startActivity(intent);
+        });
+
+
 
         AppDatabase db = AppDatabase.getInstance(this);
 
