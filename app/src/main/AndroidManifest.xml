@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera.any" />
 
     <application
@@ -18,6 +19,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SmartCampusApp">
         <activity
+            android:name=".StepCounterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EmergencyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EmergencyHistoryActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".StepHistoryActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".StudentSafety"
+            android:exported="false" />
+        <activity
             android:name=".QRScannerActivity"
             android:exported="false" />
         <activity
@@ -28,7 +44,7 @@
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
-            android:exported="true"/>
+            android:exported="true" />
         <activity
             android:name=".SplashActivity"
             android:exported="true">
@@ -50,47 +66,32 @@
         <activity
             android:name=".BuildingsActivity"
             android:exported="false" />
-
         <activity
             android:name=".LostFoundItemActivity"
             android:exported="false"
-            tools:ignore="Instantiatable" />
-
-        <!-- NEW: History page -->
+            tools:ignore="Instantiatable" /> <!-- NEW: History page -->
         <activity
             android:name=".ReportHistoryActivity"
-            android:exported="false" />
-
-        <!-- NEW: Edit page -->
+            android:exported="false" /> <!-- NEW: Edit page -->
         <activity
             android:name=".EditReportActivity"
-            android:exported="false" />
-
-        <!-- Report form -->
+            android:exported="false" /> <!-- Report form -->
         <activity
             android:name=".ReportLostItemActivity"
-            android:exported="false" />
-
-        <!-- Lost & Found listing -->
+            android:exported="false" /> <!-- Lost & Found listing -->
         <activity
             android:name=".LostAndFoundActivity"
-            android:exported="false" />
-
-        <!-- Map picker -->
+            android:exported="false" /> <!-- Map picker -->
         <activity
             android:name=".MapPickerActivity"
-            android:exported="false" />
-
-        <!-- Auth -->
+            android:exported="false" /> <!-- Auth -->
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyA6YAVAmgLuMktBy4DvLeIOkvCGgdIKIu8" />
-
-        <!-- FileProvider untuk camera -->
+            android:value="AIzaSyA6YAVAmgLuMktBy4DvLeIOkvCGgdIKIu8" /> <!-- FileProvider untuk camera -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"

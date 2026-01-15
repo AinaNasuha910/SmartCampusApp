@@ -37,6 +37,12 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        CardView safetyNavigation = findViewById(R.id.safetyNavigation);
+        safetyNavigation.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, StudentSafety.class);
+            startActivity(intent);
+        });
+
         CardView lostandfoundNavigation = findViewById(R.id.LostAndFoundNavigation);
         lostandfoundNavigation.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, LostAndFoundActivity.class);
